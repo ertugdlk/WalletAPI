@@ -6,7 +6,7 @@ const _ = require("lodash")
 const App = express()
 App.use(BodyParser.json())
 App.use(BodyParser.urlencoded({ extended: true }))
-App.listen(5000)
+App.listen(process.env.PORT || 5000)
 console.log("Tugkan API:5000 on fire !")
 
 App.get("/", (req, res) =>
