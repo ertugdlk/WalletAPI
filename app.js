@@ -1,9 +1,9 @@
-const Express = require("express")
+const express = require("express")
 const BodyParser = require("body-parser")
 const Cors = require("cors")
-const binanceAPI = require("./APIs/binanceAPI")
+const _ = require("lodash")
 
-const App = Express()
+const App = express()
 App.use(BodyParser.json())
 App.use(BodyParser.urlencoded({ extended: true }))
 App.listen(5000)
@@ -15,11 +15,5 @@ App.get("/", (req, res) =>
   })
 )
 
-//BINANCE
-//POST request body => {apikey, secretkey}
-App.post("/binance/wallet", async (req, res) => {
-  const secretkey = req.body.secretkey
-  const apikey = req.body.apikey
-  const response = await binanceAPI.getWallet(secretkey, apikey)
-  res.send(response)
-})
+//Routes
+App.use("/wallet", require("./routes/WalletRoute"))

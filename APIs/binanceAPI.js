@@ -4,8 +4,9 @@ const crypto = require("crypto")
 
 class binanceAPI {
   async getWallet(secretkey, apikey) {
-    const timestamp = Date.now()
+    const timeresponse = await Axios.get("https://api3.binance.com/api/v3/time")
     const sharedSecret = secretkey
+    const timestamp = timeresponse.data.serverTime
     const query = "recvWindow=60000&timestamp=" + timestamp
 
     //Create signature with hashed secretkey and parameters
