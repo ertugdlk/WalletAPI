@@ -27,6 +27,25 @@ class WalletController {
       throw error
     }
   }
+
+  static async controlKeys(req, res) {
+    try {
+      const provider = req.body.provider
+      const secretkey = req.body.secretkey
+      const apikey = req.body.apikey
+      const wallet_function = wallet_functions[provider]
+
+      const response_ = await wallet_function(secretkey, apikey)
+
+      if (response_.status == 401) {
+        res.send(response_)
+      } else {
+        res.send({ status: 200, msg: "verified key" })
+      }
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 module.exports = WalletController
