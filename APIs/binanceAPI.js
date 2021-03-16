@@ -3,16 +3,16 @@ const _ = require("lodash")
 const crypto = require("crypto")
 
 class binanceAPI {
-  async getWallet(secretkey, apikey) {
+  async getWallet(secretKey, apiKey) {
     try {
       const timeresponse = await Axios.get(
         "https://api3.binance.com/api/v3/time"
       )
-      const sharedSecret = secretkey
+      const sharedSecret = secretKey
       const timestamp = timeresponse.data.serverTime
       const query = "recvWindow=60000&timestamp=" + timestamp
 
-      //Create signature with hashed secretkey and parameters
+      //Create signature with hashed secretKey and parameters
       const signature = crypto
         .createHmac("sha256", sharedSecret)
         .update(query)
@@ -26,7 +26,7 @@ class binanceAPI {
           signature,
         {
           headers: {
-            "X-MBX-APIKEY": apikey,
+            "X-MBX-apiKey": apiKey,
           },
         }
       )
