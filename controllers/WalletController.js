@@ -20,11 +20,11 @@ class WalletController {
         array.map(async (provider) => {
 
           //Checking valid provider or not
-          if(!wallet_functions[provider.name]){
+          if(!wallet_functions[provider.provider]){
             res.send({ status: 400, msg: "invalid provider" })
             res.end()
           }
-          const wallet_function = wallet_functions[provider.name]
+          const wallet_function = wallet_functions[provider.provider]
 
           if (wallet_function) {
             const response_ = await wallet_function(

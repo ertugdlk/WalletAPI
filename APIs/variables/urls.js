@@ -2,7 +2,7 @@
 const BaseUrls =  {
     BINANCE: 'https://api3.binance.com/api/v3/' ,
     FTX: 'https://ftx.com/api/',
-    BITMAX: 'https://bitmax.io/api/pro/v1/'
+    BITMAX: 'https://bitmax.io/'
 }
 
 const BitmaxEndpoints = {
