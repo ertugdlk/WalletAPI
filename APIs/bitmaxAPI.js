@@ -10,7 +10,7 @@ const {baseUrls, bitmaxEndpoints} = require('./variables/urls');
 * @classdesc Class that includes Bitmax.com integration functions
 */
 class BitmaxApi {
-
+    
     /**
     * Returns wallet belongs to the secretKey and apiKey
     * @param {string} secretKey User provided secretKey
@@ -23,13 +23,13 @@ class BitmaxApi {
             const accountInfo = await this.getAccountInfo(
                 secretKey,
                 apiKey
-            );
+            )
 
             const requestHeader = this.getRequestHeader(
                 'balance',
                 secretKey,
                 apiKey
-            );
+            )
 
             const response = await axios.get(
                 baseUrls.BITMAX +
@@ -37,16 +37,16 @@ class BitmaxApi {
                         '/api/pro/v1/' +
                             bitmaxEndpoints.WALLET,
                 {headers: requestHeader}
-            );
+            )
 
             return response.data.data;
         } catch(error) {
             return {
                 msg: error.message || 'There was an error',
                 status: error.status || 400
-            }
+            };
         }
-    }
+    };
 
     /**
     * Returns the account which belongs to the secretKey and apiKey.
@@ -70,11 +70,11 @@ class BitmaxApi {
                 {headers: requestHeader}
             );
 
-            return response.data
+            return response.data;
         } catch(error) {
-            throw error
+            throw error;
         }
-    }
+    };
 
     /**
     * Returns the request header for private data fetching.
@@ -90,14 +90,14 @@ class BitmaxApi {
         const signature = cryptoLib
             .createHmac("sha256", secretKey)
             .update(urlQuery)
-            .digest("hex")
+            .digest("hex");
 
         return {
             "x-auth-key": apiKey,
             "x-auth-timestamp": timestamp,
             "x-auth-signature": signature
-        }
-    }
+        };
+    };
 }
 
 module.exports = new BitmaxApi();
