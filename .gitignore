@@ -2,3 +2,4 @@
 node_modules/
 coin.json
 script_coins.js
+database/variables.js
