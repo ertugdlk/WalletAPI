@@ -33,6 +33,7 @@ async function startExpress() {
 
   //Routes
   app.use("/wallet", require("./routes/WalletRoute"));
+  app.use('/common', require('./routes/CommonRoute'));
 }
 
 startMongoDb();

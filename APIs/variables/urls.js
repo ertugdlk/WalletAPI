@@ -2,7 +2,8 @@
 const BaseUrls =  {
     BINANCE: 'https://api3.binance.com/api/v3/' ,
     FTX: 'https://ftx.com/api/',
-    BITMAX: 'https://bitmax.io/'
+    BITMAX: 'https://bitmax.io/',
+    COINGECKO: 'https://api.coingecko.com/api/v3/',
 }
 
 const BitmaxEndpoints = {
@@ -19,7 +20,13 @@ const BitmaxEndpoints = {
     //https://bitmax-exchange.github.io/bitmax-pro-api/#balance
 }
 
+const CoingeckoEndpoints = {
+    COINS_LIST: 'coins/list',
+    COIN_MARKETS: 'coins/markets'
+}
+
 module.exports = {
     baseUrls: BaseUrls,
-    bitmaxEndpoints: BitmaxEndpoints
+    bitmaxEndpoints: BitmaxEndpoints,
+    coingeckoEndpoints: CoingeckoEndpoints
 }
