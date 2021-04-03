@@ -1,12 +1,16 @@
-const cors = require("cors");
-const _ = require("lodash");
+/* eslint-disable no-console */
 
-const express = require("express");
-const BodyParser = require("body-parser");
-const mongoClient = require('./database/config');
+const cors = require('cors');
+const _ = require('lodash');
+
+const express = require('express');
+const BodyParser = require('body-parser');
+const mongoClient = require('./source/database/config');
+
+const walletRoute = require('./source/routes/WalletRoute');
+const commonRoute = require('./source/routes/CommonRoute');
 
 const { MONGODB_CONNECT_ERROR } = require('./source/variables/errors');
-
 
 const app = express();
 
@@ -24,16 +28,16 @@ async function startMongoDb() {
 
 async function startExpress() {
   const port = process.env.PORT || 5000;
-  const portStatus = 'Listening on port ' + port;
+  const portStatus = `Listening on port ${port}`;
 
   app.listen(port);
-  console.log(portStatus);  
+  console.log(portStatus);
 
-  app.get("/", (req, res) => res.json({ msg: "tugkan API service"}));
+  app.get('/', (req, res) => res.json({ msg: 'tugkan API service' }));
 
-  //Routes
-  app.use("/wallet", require("./routes/WalletRoute"));
-  app.use('/common', require('./routes/CommonRoute'));
+  // Routes
+  app.use('/wallet', walletRoute);
+  app.use('/common', commonRoute);
 }
 
 startMongoDb();
