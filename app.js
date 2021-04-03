@@ -5,29 +5,18 @@ const _ = require('lodash');
 
 const express = require('express');
 const BodyParser = require('body-parser');
-const mongoClient = require('./source/database/config');
 
 const walletRoute = require('./source/routes/WalletRoute');
 const commonRoute = require('./source/routes/CommonRoute');
 
-const {
-  MONGODB_CONNECT_ERROR,
-  SERVER_RUNNING_CORRECTLY,
-} = require('./source/variables/responses');
+const { connectToMongoDb } = require('./source/database/config');
+const { SERVER_RUNNING_CORRECTLY } = require('./source/variables/responses');
 
 const app = express();
 
 app.use(cors());
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
-
-async function startMongoDb() {
-  try {
-    await mongoClient.connect();
-  } catch (error) {
-    console.log(MONGODB_CONNECT_ERROR, error);
-  }
-}
 
 async function startExpress() {
   const port = process.env.PORT || 5000;
@@ -43,5 +32,5 @@ async function startExpress() {
   app.use('/common', commonRoute);
 }
 
-startMongoDb();
+connectToMongoDb();
 startExpress();

@@ -1,5 +1,6 @@
-const { CronJob } = require('cron');
+// const { CronJob } = require('cron');
 
+/*
 // This string indicates that "every minute".
 const cronTiming = '* * * * *';
 
@@ -12,3 +13,4 @@ const fetchMarketData = new CronJob(
 );
 
 fetchMarketData.start();
+*/

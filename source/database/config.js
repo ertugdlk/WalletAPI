@@ -1,6 +1,11 @@
 const { MongoClient } = require('mongodb');
 const { userName, password } = require('./variables');
 
+const {
+    MONGODB_CONNECT_ERROR,
+    MONGODB_CONNECTED,
+} = require('../variables/responses');
+
 const uri = `mongodb+srv://${
     userName
     }:${
@@ -12,4 +17,17 @@ const mongoClient = new MongoClient(uri, {
     useUnifiedTopology: true,
 });
 
-module.exports = mongoClient;
+function connectToMongoDb() {
+    try {
+        mongoClient.connect();
+        console.log(MONGODB_CONNECTED);
+    } catch (error) {
+        console.log(MONGODB_CONNECT_ERROR);
+        throw error;
+    }
+}
+
+module.exports = {
+    connectToMongoDb,
+    mongoClient,
+};
