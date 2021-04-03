@@ -10,7 +10,10 @@ const mongoClient = require('./source/database/config');
 const walletRoute = require('./source/routes/WalletRoute');
 const commonRoute = require('./source/routes/CommonRoute');
 
-const { MONGODB_CONNECT_ERROR } = require('./source/variables/errors');
+const {
+  MONGODB_CONNECT_ERROR,
+  SERVER_RUNNING_CORRECTLY,
+} = require('./source/variables/responses');
 
 const app = express();
 
@@ -33,7 +36,7 @@ async function startExpress() {
   app.listen(port);
   console.log(portStatus);
 
-  app.get('/', (req, res) => res.json({ msg: 'tugkan API service' }));
+  app.get('/', (req, res) => res.json({ msg: SERVER_RUNNING_CORRECTLY }));
 
   // Routes
   app.use('/wallet', walletRoute);

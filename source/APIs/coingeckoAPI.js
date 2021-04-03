@@ -6,7 +6,7 @@ const {
 
 const {
     EXTERNAL_REQUEST_FAIL
-} = require('../variables/errors');
+} = require('../variables/responses');
 
 
 class CoingeckoAPI {
