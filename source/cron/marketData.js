@@ -1,16 +1,16 @@
-// const { CronJob } = require('cron');
+const { CronJob } = require('cron');
+const { saveMarketData } = require('../database/operations/CoingeckoDb');
 
-/*
 // This string indicates that "every minute".
 const cronTiming = '* * * * *';
 
-const fetchMarketData = new CronJob(
+const updateDatabase = new CronJob(
     cronTiming,
-    (() => {}),
-    null,
+    (() => saveMarketData()),
+    () => console.log('Cron ticked'),
     true,
-    'America/Los_Angeles',
 );
 
-fetchMarketData.start();
-*/
+module.exports = {
+    updateDatabase,
+};

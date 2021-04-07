@@ -12,6 +12,8 @@ const commonRoute = require('./source/routes/CommonRoute');
 const { connectToMongoDb } = require('./source/database/config');
 const { SERVER_RUNNING_CORRECTLY } = require('./source/variables/responses');
 
+const { updateDatabase } = require('./source/cron/marketData');
+
 const app = express();
 
 app.use(cors());
@@ -34,3 +36,4 @@ async function startExpress() {
 
 connectToMongoDb();
 startExpress();
+updateDatabase.start();

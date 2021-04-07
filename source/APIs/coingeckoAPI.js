@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 const axios = require('axios');
 const {
     baseUrls,
@@ -15,12 +16,10 @@ class CoingeckoAPI {
      * their id's.
      */
     static async getCoinList(request, response) {
-        const url = baseUrls.COINGECKO + coingeckoEndpoints.COINS_LIST;
-
         try {
-            const apiResponse = await axios.get(url);
+            const coinList = await CoingeckoAPI.fetchCoinList();
             response.send({
-                data: apiResponse.data,
+                data: coinList,
                 status: 200,
             });
         } catch (error) {
@@ -58,7 +57,11 @@ class CoingeckoAPI {
         const url = baseUrls.COINGECKO + coingeckoEndpoints.COIN_MARKETS;
 
         try {
-            const requestParams = this.getParams();
+            const coinList = await this.fetchCoinList();
+
+            const concattedCoinNames = coinList.map((coin) => coin.symbol).join();
+            const requestParams = this.getParams(concattedCoinNames);
+
             const apiResponse = await axios.get(
                 url,
                 { params: requestParams },
@@ -72,12 +75,30 @@ class CoingeckoAPI {
     }
 
     /**
+     * @function fetchCoinList Fetchs data from Coingecko API's.
+     * @returns {object} Data that contains COINGECKO supported coin list.
+     */
+    static async fetchCoinList() {
+        const url = baseUrls.COINGECKO + coingeckoEndpoints.COINS_LIST;
+        try {
+            const apiResponse = await axios.get(url);
+            return apiResponse.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    /**
      * @param {string} currency Currency for convert prices. Default is USD.
+     * @param {number} capacity Number of results per page. Max: 250, min: 1. Default is 250.
      * @returns {object} Object that contains function params.
      */
-    static getParams(currency) {
+    static getParams(coinNames, currency, capacity) {
         return {
             vs_currency: currency || 'usd',
+            per_page: capacity || 250,
+            ids: coinNames,
         };
     }
 }
